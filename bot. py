@@ -1,0 +1,18 @@
+import telebot
+
+TOKEN = "8249031629:AAHxnbQ6LOTCEEXoH2_74HTo7z8PovvDV98"
+
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(content_types=['audio'])
+def handle_music(message):
+    file_id = message.audio.file_id
+    title = message.audio.title or "Музыка"
+    performer = message.audio.performer or "Неизвестный"
+
+    new_name = f"{performer} - {title} 🎵"
+    caption = f"{new_name}\n\n📢 Канал: @KAZAK_MUSIC8"
+
+    bot.send_audio(message.chat.id, file_id, caption=caption)
+
+bot.polling(non_stop=True)
